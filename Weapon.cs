@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Photon.Pun;
 using UnityEngine;
+using TMPro;
 
 public class Weapon : MonoBehaviour
 {
@@ -15,6 +16,23 @@ public class Weapon : MonoBehaviour
     
     private float nextFire;
 
+    [Header("ammo")]
+    public int mag=5;
+    public int ammo=45;
+    public int magAmmo=45;
+    public int maxAmmo=90;
+
+    [Header("UI")]
+    public TextMeshProUGUI ammoText;
+    public TextMeshProUGUI magText;
+
+
+    void Start()
+    {
+        magText.text = "Mag: " + mag.ToString();
+        ammoText.text = "Ammo: " +  ammo.ToString() + '/' + magAmmo.ToString();
+    }
+
     void Update()
     {
 
@@ -23,10 +41,30 @@ public class Weapon : MonoBehaviour
             nextFire -= Time.deltaTime;
         }
 
-        if(Input.GetButton("Fire1") && nextFire <= 0 )
+        if(Input.GetButton("Fire1") && nextFire <= 0)
         {
-            nextFire = 1 / fireRate;
-            Shoot();
+            if(ammo > 0)
+            {
+
+                nextFire = 1 / fireRate;
+                Shoot();
+                
+                ammo--;
+
+                magText.text = "Mag: " + mag.ToString();
+                ammoText.text = "Ammo: " +  ammo.ToString() + '/' + magAmmo.ToString();
+
+            }
+
+            else
+            {
+                Reload();
+            }
+        }
+
+        if(Input.GetKeyDown(KeyCode.R))
+        {
+            Reload();
         }
     }
 
@@ -50,5 +88,15 @@ public class Weapon : MonoBehaviour
         }
     }
 
+    public void Reload()
+    {
+        if(mag > 0 && ammo < magAmmo)
+        {
+            mag--;
+            ammo = magAmmo;
+        }
 
+        magText.text = "Mag: " + mag.ToString();
+        ammoText.text = "Ammo: " +  ammo.ToString() + '/' + magAmmo.ToString();
+    }
 }
