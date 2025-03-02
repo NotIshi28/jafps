@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Photon.Pun;
 using UnityEngine;
 using TMPro;
+using Photon.Pun.UtilityScripts;
 
 public class Weapon : MonoBehaviour
 {
@@ -106,6 +107,7 @@ public class Weapon : MonoBehaviour
 
     }
 
+    [PunRPC]
     void Shoot()
     {
 
@@ -123,6 +125,12 @@ public class Weapon : MonoBehaviour
 
             if(hit.transform.gameObject.GetComponent<Health>())
             {
+
+                if(damage >= hit.transform.gameObject.GetComponent<Health>().health)
+                {
+                    PhotonNetwork.LocalPlayer.AddScore(100);
+                }
+
                 hit.transform.gameObject.GetComponent<PhotonView>().RPC("TakeDamage", RpcTarget.All, damage);
                 Debug.Log("Hit: " + hit.transform.name);
             }
