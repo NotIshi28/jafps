@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 public class RoomManager : MonoBehaviourPunCallbacks
 {
@@ -14,6 +15,10 @@ public class RoomManager : MonoBehaviourPunCallbacks
 
     public GameObject nameUI;
     public GameObject connectingUI;
+
+    [HideInInspector]
+    public int kills = 0;
+    public int deaths = 0;
     
     private string playerName="WigglySquid123";
 
@@ -90,4 +95,24 @@ public class RoomManager : MonoBehaviourPunCallbacks
 
         PhotonNetwork.LocalPlayer.NickName = playerName;
     }
+
+    
+    public void SetHashes()
+    {
+        try
+        {
+            Hashtable hash = PhotonNetwork.LocalPlayer.CustomProperties;
+
+            hash["kills"] = kills;
+            hash["deaths"] = deaths;
+
+            PhotonNetwork.LocalPlayer.SetCustomProperties(hash);
+        }
+
+        catch
+        {
+
+        }
+    }
+
 }

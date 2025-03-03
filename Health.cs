@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using TMPro;
+using Photon.Realtime;
 
 public class Health : MonoBehaviour
 {
@@ -24,9 +25,24 @@ public class Health : MonoBehaviour
             if (isLocalPlayer)
             {
                 RoomManager.instance.RespawnPlayer();
+                RoomManager.instance.deaths++;
+                RoomManager.instance.SetHashes();
             }
+            
             
             Destroy(gameObject);
         }
     }
+
+    void FixedUpdate()
+    {
+        if (transform.position.y < -2)
+        {
+            if (isLocalPlayer)
+                RoomManager.instance.RespawnPlayer();
+
+            Destroy(gameObject);
+        }
+    }
+
 }

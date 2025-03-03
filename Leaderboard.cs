@@ -5,6 +5,7 @@ using System.Linq;
 using Photon.Pun;
 using TMPro;
 using Photon.Pun.UtilityScripts;
+using Photon.Realtime;
 
 public class Leaderboard : MonoBehaviour
 {
@@ -19,6 +20,7 @@ public class Leaderboard : MonoBehaviour
     public GameObject[] slots;
     public TextMeshProUGUI[] nameText;
     public TextMeshProUGUI[] scoreText;
+    public TextMeshProUGUI[] kdText;
 
     void Start()
     {
@@ -42,6 +44,13 @@ public class Leaderboard : MonoBehaviour
             Debug.Log(player);
             nameText[i].text = player.NickName;
             scoreText[i].text = player.GetScore().ToString();
+
+            if(player.CustomProperties["kills"] != null)
+            {
+
+                kdText[i].text = player.CustomProperties["kills"].ToString() + "/" + player.CustomProperties["deaths"].ToString();
+            }
+
             i++;
         }
     }
