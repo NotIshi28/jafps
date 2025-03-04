@@ -31,7 +31,7 @@ public class Health : MonoBehaviour
         health -= _damage;
         
         healthText.text = "Health: " + Mathf.Round(health).ToString();
-
+        Image healthbarImage = healthbar.GetComponent<Image>();
         if(healthbarImage != null)
         {
             if(health <= 25)
