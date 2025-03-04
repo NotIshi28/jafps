@@ -22,6 +22,7 @@ public class Weapon : MonoBehaviour
     public int ammo=45;
     public int magAmmo=45;
     public int maxAmmo=90;
+    public float rangeDamageConst = 0.05f;
 
     [Header("UI")]
     public TextMeshProUGUI ammoText;
@@ -134,8 +135,9 @@ public class Weapon : MonoBehaviour
                     
                     PhotonNetwork.LocalPlayer.AddScore(100);
                 }
+                float hitDistance = hit.distance;
 
-                hit.transform.gameObject.GetComponent<PhotonView>().RPC("TakeDamage", RpcTarget.All, damage);
+                hit.transform.gameObject.GetComponent<PhotonView>().RPC("TakeDamage", RpcTarget.All, damage-(hitDistance*rangeDamageConst));
                 Debug.Log("Hit: " + hit.transform.name);
             }
             

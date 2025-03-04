@@ -4,21 +4,33 @@ using UnityEngine;
 using Photon.Pun;
 using TMPro;
 using Photon.Realtime;
+using UnityEngine.UI;
 
 public class Health : MonoBehaviour
 {
-    public int health;
+    public float health;
 
     public bool isLocalPlayer;
     public TextMeshProUGUI healthText;
-    
+
+    public RectTransform healthbar;
+    private float originalHealthbarSize;
+
+
+    void Start()
+    {
+        originalHealthbarSize = healthbar.sizeDelta.x;
+        
+    }
 
     [PunRPC]
-    public void TakeDamage(int _damage)
+    public void TakeDamage(float _damage)
     {
         health -= _damage;
         
         healthText.text = "Health: " + health.ToString();
+
+        healthbar.sizeDelta = new Vector2(originalHealthbarSize * health/100f, healthbar.sizeDelta.y);
 
         if (health <= 0)
         {
