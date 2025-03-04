@@ -5,6 +5,7 @@ using Photon.Pun;
 using TMPro;
 using Photon.Realtime;
 using UnityEngine.UI;
+using Unity.VisualScripting;
 
 public class Health : MonoBehaviour
 {
@@ -28,7 +29,7 @@ public class Health : MonoBehaviour
     {
         health -= _damage;
         
-        healthText.text = "Health: " + health.ToString();
+        healthText.text = "Health: " + Mathf.Round(health).ToString();
 
         healthbar.sizeDelta = new Vector2(originalHealthbarSize * health/100f, healthbar.sizeDelta.y);
 

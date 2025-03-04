@@ -7,7 +7,7 @@ using Photon.Pun.UtilityScripts;
 
 public class Weapon : MonoBehaviour
 {
-    public int damage;
+    public float damage;
     public Camera camera;
     public float range;
     public float fireRate;
@@ -137,7 +137,7 @@ public class Weapon : MonoBehaviour
                 }
                 float hitDistance = hit.distance;
 
-                hit.transform.gameObject.GetComponent<PhotonView>().RPC("TakeDamage", RpcTarget.All, damage-(hitDistance*rangeDamageConst));
+                hit.transform.gameObject.GetComponent<PhotonView>().RPC("TakeDamage", RpcTarget.All, Mathf.Abs(damage-(hitDistance*rangeDamageConst)));
                 Debug.Log("Hit: " + hit.transform.name);
             }
             
