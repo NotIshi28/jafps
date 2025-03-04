@@ -22,6 +22,7 @@ public class Weapon : MonoBehaviour
     public int ammo=45;
     public int magAmmo=45;
     public int maxAmmo=90;
+    //added to decrease damage with range
     public float rangeDamageConst = 0.05f;
 
     [Header("UI")]
@@ -34,8 +35,7 @@ public class Weapon : MonoBehaviour
     public AnimationClip reload;
 
     [Header("Recoil")]
-    // [Range(0,1)]
-    // public float recoilPercent = 0.3f;
+
     [Range(0,2)]
     public float recoverPercent = 0.7f;
 
@@ -80,7 +80,7 @@ public class Weapon : MonoBehaviour
                 
                 ammo--;
 
-                magText.text = "Mag: " + mag.ToString();
+                magText.text = "Mags Left: " + mag.ToString();
                 ammoText.text = "Ammo: " +  ammo.ToString() + '/' + magAmmo.ToString();
 
             }
@@ -153,7 +153,7 @@ public class Weapon : MonoBehaviour
             ammo = magAmmo;
         }
 
-        magText.text = "Mag: " + mag.ToString();
+        magText.text = "Mags Left: " + mag.ToString();
         ammoText.text = "Ammo: " +  ammo.ToString() + '/' + magAmmo.ToString();
     }
 

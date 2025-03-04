@@ -17,11 +17,12 @@ public class Health : MonoBehaviour
     public RectTransform healthbar;
     private float originalHealthbarSize;
 
-
+    public Image healthbarImage;
     void Start()
     {
         originalHealthbarSize = healthbar.sizeDelta.x;
-        
+        Image healthbarImage = healthbar.GetComponent<Image>();
+        healthbarImage.color = Color.green;
     }
 
     [PunRPC]
@@ -30,6 +31,22 @@ public class Health : MonoBehaviour
         health -= _damage;
         
         healthText.text = "Health: " + Mathf.Round(health).ToString();
+
+        if(healthbarImage != null)
+        {
+            if(health <= 25)
+            {
+                healthbarImage.color = Color.red;
+            }
+            else if(health <= 50)
+            {
+                healthbarImage.color = Color.yellow;
+            }
+            else
+            {
+                healthbarImage.color = Color.green;
+            }
+        }
 
         healthbar.sizeDelta = new Vector2(originalHealthbarSize * health/100f, healthbar.sizeDelta.y);
 
