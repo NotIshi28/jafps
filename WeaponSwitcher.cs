@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Photon.Pun;
 using UnityEngine;
 
 public class WeaponSwitcher : MonoBehaviour
@@ -8,11 +9,15 @@ public class WeaponSwitcher : MonoBehaviour
     public Animation anim;
     public AnimationClip draw;
 
+
+    public GameObject playerSetupView;
+
     private int selectedWeapon = 0;
     // Start is called before the first frame update
     void Start()
     {
         SelectWeapon();
+        playerSetupView.GetComponent<PhotonView>().RPC("setTPWeapon", RpcTarget.All, 0);
     }
 
     // Update is called once per frame
@@ -63,9 +68,13 @@ public class WeaponSwitcher : MonoBehaviour
             }
         }
     }
-
+    
+    [PunRPC]
     void SelectWeapon()
     {
+
+        playerSetupView.GetComponent<PhotonView>().RPC("setTPWeapon", RpcTarget.All, selectedWeapon);
+        Debug.Log("Selected Weapon: " + selectedWeapon);
 
         if(selectedWeapon >= transform.childCount)
         {
