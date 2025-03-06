@@ -43,6 +43,8 @@ public class PlayerPhotonSoundManager : MonoBehaviour
     {
         gunSource.clip = allGunClips[index];
 
+        gunSource.volume = 0.1f;
+
         gunSource.Play();
     }
 
