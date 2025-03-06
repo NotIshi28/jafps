@@ -29,6 +29,10 @@ public class Weapon : MonoBehaviour
     public TextMeshProUGUI ammoText;
     public TextMeshProUGUI magText;
 
+    [Header("Sound")]
+    public int ShootSoundIndex = 0;
+    public PlayerPhotonSoundManager playerPhotonSoundManager;
+
 
     [Header("Animation")]
     public Animation anim;
@@ -115,6 +119,8 @@ public class Weapon : MonoBehaviour
         recoiling = true;
         recovering = false;
 
+        playerPhotonSoundManager.PlayShootSound(ShootSoundIndex);
+
         Ray ray = new Ray(camera.transform.position, camera.transform.forward);
 
         RaycastHit hit;
@@ -149,12 +155,8 @@ public class Weapon : MonoBehaviour
         if(mag > 0 && ammo < magAmmo)
         {
             anim.Play(reload.name);
-            mag--;
-            ammo = magAmmo;
         }
 
-        magText.text = "Mags Left: " + mag.ToString();
-        ammoText.text = "Ammo: " +  ammo.ToString() + '/' + magAmmo.ToString();
     }
 
     public void Recoil()
@@ -181,5 +183,14 @@ public class Weapon : MonoBehaviour
             recoiling = false;
             recovering = false;
         }
+    }
+
+    public void AddAmmo()
+    {
+        mag--;
+        ammo = magAmmo;
+
+        magText.text = "Mags Left: " + mag.ToString();
+        ammoText.text = "Ammo: " +  ammo.ToString() + '/' + magAmmo.ToString();
     }
 }
