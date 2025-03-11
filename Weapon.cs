@@ -11,6 +11,8 @@ public class Weapon : MonoBehaviour
     public Camera camera;
     public float range;
     public float fireRate;
+
+    public bool isShotgun = false;
     
     [Header("vfx")]
     public ParticleSystem hitFx;
@@ -76,7 +78,7 @@ public class Weapon : MonoBehaviour
 
         if(Input.GetButton("Fire1") && nextFire <= 0 && anim.isPlaying == false)
         {
-            if(ammo > 0)
+            if(ammo > 0 )
             {
 
                 nextFire = 1 / fireRate;
@@ -89,7 +91,7 @@ public class Weapon : MonoBehaviour
 
             }
 
-            else
+            else if(!isShotgun)
             {
                 Reload();
             }
