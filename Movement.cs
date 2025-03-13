@@ -321,7 +321,7 @@ public class Movement : MonoBehaviour
         // Gets input and calls jump method
         if(enableJump && Input.GetKeyDown(jumpKey) && isGrounded)
         {
-            Jump();
+            Jump(jumpPower);
         }
 
         #endregion
@@ -458,12 +458,12 @@ public class Movement : MonoBehaviour
         }
     }
 
-    private void Jump()
+    private void Jump(float _jumpPower)
     {
         // Adds force to the player rigidbody to jump
         if (isGrounded)
         {
-            rb.AddForce(0f, jumpPower, 0f, ForceMode.Impulse);
+            rb.AddForce(0f, _jumpPower, 0f, ForceMode.Impulse);
             isGrounded = false;
         }
 
@@ -523,6 +523,21 @@ public class Movement : MonoBehaviour
             // Resets when play stops moving
             timer = 0;
             joint.localPosition = new Vector3(Mathf.Lerp(joint.localPosition.x, jointOriginalPos.x, Time.deltaTime * bobSpeed), Mathf.Lerp(joint.localPosition.y, jointOriginalPos.y, Time.deltaTime * bobSpeed), Mathf.Lerp(joint.localPosition.z, jointOriginalPos.z, Time.deltaTime * bobSpeed));
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        Debug.Log(collision.gameObject.tag);
+        switch(collision.gameObject.tag)
+        {
+            case "JumpPad12":
+                Jump(12f);
+                break;
+
+            case "JumpPad8":
+                Jump(8f);
+                break;
         }
     }
 }

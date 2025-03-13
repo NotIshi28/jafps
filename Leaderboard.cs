@@ -41,7 +41,6 @@ public class Leaderboard : MonoBehaviour
         foreach (var player in sortedPlayerList)
         {
             slots[i].SetActive(true);
-            Debug.Log(player);
             nameText[i].text = player.NickName;
             scoreText[i].text = player.GetScore().ToString();
 
