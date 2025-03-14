@@ -6,7 +6,7 @@ using Photon.Pun;
 public class PauseController : MonoBehaviour
 {
     public GameObject canvas;
-    public Camera camera;
+    // public Camera roomCamera;
 
     public void Start()
     {
@@ -15,7 +15,7 @@ public class PauseController : MonoBehaviour
 
     public void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Escape) && camera.enabled == false)
+        if(Input.GetKeyDown(KeyCode.Escape))
         {
             Pause();
         }
